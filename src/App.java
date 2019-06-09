@@ -22,7 +22,9 @@ public class App {
         //Verificar a altura da árvore:
         System.out.println("Altura da árvore: "+ st1.height());
 
-        //Lista de 
+        //Lista de elementos da árvore
+        //Caminhamento pré-fixado
+        System.out.println("Caminhamento pré-fixado: "+ st1.positionsPre());
 
         //Exibir árvore com métodos de caminhamento:
             //Implementar
