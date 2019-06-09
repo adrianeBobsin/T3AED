@@ -9,7 +9,6 @@ public class App {
         st1.put(11, 11);
         st1.put(1, 1);
 
-
         SplayTree<String, String> st = new SplayTree<String, String>();
         st.put("www.cs.princeton.edu", "128.112.136.11");
         st.put("www.cs.princeton.edu", "128.112.136.12");
