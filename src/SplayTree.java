@@ -6,11 +6,11 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
     // === Classe Node ===
     private class Node {
         private Key key;            // Chave do nodo
-        private Value value;        // Valor
+        private int value;          // Valor
         private Node left, right;   // Referências de esquerda e direita do nodo
 
         // == Constructor Node ==
-        public Node(Key key, Value value) {
+        public Node(Key key, int value) {
             this.key = key;
             this.value = value;
         }
@@ -25,7 +25,18 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
      * @return true se a chave existe ou false se não existir na árvore
      */
     public boolean contains(Key key) {
-        return get(key) != null;
+        return get(key) != 0;
+    }
+
+    /**
+     * Verifica se a árvore esta vazia.
+     * Notação O()
+     *
+     * @return true se a árvore estiver vazia ou
+     * false se tiver ao menos um elemento.
+     */
+    public boolean isEmpty() {
+        return root == null;
     }
 
     /**
@@ -36,11 +47,11 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
      * @return o valor do nodo que possui a chave indicada ou null se a
      * chave não existir na árvore.
      */
-    public Value get(Key key) {
+    public int get(Key key) {
         root = splay(root, key);
         int cmp = key.compareTo(root.key);
         if (cmp == 0) return root.value;
-        else return null;
+        else return 0;
     }
 
     /**
@@ -50,7 +61,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
      * @param key
      */
     public void remove(Key key) {
-        if (root == null) return; // empty tree
+        if (root == null) return; // árvore vazia
 
         root = splay(root, key);
 
@@ -67,7 +78,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
             }
         }
 
-        // else: it wasn't in the tree to remove
+        // Se compareTo retornar valor != 0, o valor não esta na árvore
     }
 
     /**
@@ -77,7 +88,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
      * @param key
      * @param value
      */
-    public void put(Key key, Value value) {
+    public void put(Key key, int value) {
         // splay key to root
         if (root == null) {
             root = new Node(key, value);
@@ -164,9 +175,55 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         } else return h;
     }
 
+    /**
+     * Método que retorna o pai do elemento.
+     * Notação O()
+     *
+     * @param key
+     * @return nodo pai do elemento
+     */
+   // private Node getParent(Key key) {
+        // Implementar
+   // }
+
+    /**
+     * Método que verifica se a árvore é balanceada
+     * Notação O()
+     *
+     * @return true se a árvore for balanceada ou
+     * false se não for.
+     */
+   // private boolean isBalanced() {
+        //Implementar
+   // }
+
 
     /***************************************************************************
-     *  Métodos auxiliares.
+     *      Métodos de caminhamento                                            *
+     ***************************************************************************/
+
+    /**
+     * Caminhamento pré-fixado
+     * Notação O()
+     *
+     * @return uma lista de inteiros contendo os elementos da árvore.
+     */
+    public LinkedListOfInteger positionsPre() {
+        LinkedListOfInteger res = new LinkedListOfInteger();
+        positionsPreAux(root, res);
+        return res;
+    }
+    private void positionsPreAux(Node n, LinkedListOfInteger res) {
+        if (n != null) {
+            res.add(n.value); //Visita o nodo
+            positionsPreAux(n.left, res); //Visita a subarvore esquerda
+            positionsPreAux(n.right, res); //Visita a subarvore direita
+        }
+    }
+
+
+    /***************************************************************************
+     *      Métodos auxiliares                                                 *
      ***************************************************************************/
 
     // height of tree (1-node tree has height 0)
@@ -178,7 +235,6 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         if (x == null) return -1;
         return 1 + Math.max(height(x.left), height(x.right));
     }
-
 
     public int size() {
         return size(root);

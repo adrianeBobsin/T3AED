@@ -1,39 +1,31 @@
 public class App {
 
-    // test client
     public static void main(String[] args) {
+        //Instância árvore de inteiros:
         SplayTree<Integer, Integer> st1 = new SplayTree<Integer, Integer>();
-        st1.put(5, 5);
-        st1.put(9, 9);
-        st1.put(13, 13);
-        st1.put(11, 11);
-        st1.put(1, 1);
 
-        SplayTree<String, String> st = new SplayTree<String, String>();
-        st.put("www.cs.princeton.edu", "128.112.136.11");
-        st.put("www.cs.princeton.edu", "128.112.136.12");
-        st.put("www.cs.princeton.edu", "128.112.136.13");
-        st.put("www.princeton.edu",    "128.112.128.15");
-        st.put("www.yale.edu",         "130.132.143.21");
-        st.put("www.simpsons.com",     "209.052.165.60");
+        //Insere 10 elementos:
+        st1.put(1, 10);
+        st1.put(2, 20);
+        st1.put(3, 30);
+        st1.put(4, 40);
+        st1.put(5, 50);
+        st1.put(6, 60);
+        st1.put(7, 70);
+        st1.put(8, 80);
+        st1.put(9, 90);
+        st1.put(10, 100);
 
-        //Verificar StdOut:
-        /*StdOut.println("The size 0 is: " + st.size());
-        st.remove("www.yale.edu");
-        StdOut.println("The size 1 is: " + st.size());
-        st.remove("www.princeton.edu");
-        StdOut.println("The size 2 is: " + st.size());
-        st.remove("non-member");
-        StdOut.println("The size 3 is: " + st.size());
-        StdOut.println(st.get("www.cs.princeton.edu"));
-        StdOut.println("The size 4 is: " + st.size());
-        StdOut.println(st.get("www.yale.com"));
-        StdOut.println("The size 5 is: " + st.size());
-        StdOut.println(st.get("www.simpsons.com"));
-        StdOut.println("The size 6 is: " + st.size());
-        StdOut.println();
-    */
+        // Verificar se a árvore está balanceada:
+            // Implementar
+
+        //Verificar a altura da árvore:
+        System.out.println("Altura da árvore: "+ st1.height());
+
+        //Lista de 
+
+        //Exibir árvore com métodos de caminhamento:
+            //Implementar
+
     }
-
-
 }
