@@ -221,6 +221,45 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         }
     }
 
+    /**
+     * Caminhamento pós-fixado
+     * Notação O()
+     *
+     * @return uma lista de inteiros contendo os elementos da árvore.
+     */
+    public LinkedListOfInteger positionsPos() {
+        LinkedListOfInteger res = new LinkedListOfInteger();
+        positionsPosAux(root, res);
+        return res;
+    }
+    private void positionsPosAux(Node n, LinkedListOfInteger res) {
+        if (n != null) {
+            positionsPosAux(n.left, res); //Visita a subarvore esquerda
+            positionsPosAux(n.right, res); //Visita a subarvore direita
+            res.add(n.value); //Visita o nodo
+        }
+    }
+
+    /**
+     * Caminhamento central.
+     * Notação O()
+     *
+     * @return lista de inteiros contendo os elementos da árvore.
+     */
+    public LinkedListOfInteger positionsCentral() {
+        LinkedListOfInteger res = new LinkedListOfInteger();
+        positionsCentralAux(root, res);
+        return res;
+    }
+    private void positionsCentralAux(Node n, LinkedListOfInteger res) {
+        if (n != null) {
+            positionsCentralAux(n.left, res); //Visita a subarvore esquerda
+            res.add(n.value); //Visita o nodo
+            positionsCentralAux(n.right, res); //Visita a subarvore direita
+        }
+    }
+
+
 
     /***************************************************************************
      *      Métodos auxiliares                                                 *
