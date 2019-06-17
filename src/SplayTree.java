@@ -31,7 +31,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Verifica se a árvore esta vazia.
-     * Notação O()
+     * Notação O(n)
      *
      * @return true se a árvore estiver vazia ou
      * false se tiver ao menos um elemento.
@@ -57,7 +57,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Método que remove o nodo com chave passada por parâmetro da árvore.
-     * Notação O()
+     * Notação O(log n)
      *
      * @param key
      */
@@ -84,7 +84,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Método de inserção de um novo elemento na árvore.
-     * Notação O()
+     * Notação O(log n)
      *
      * @param key
      * @param value
@@ -131,6 +131,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Método de espelhamento da árvore.
+     * Notação O(log n)
      *
      * @param h
      * @param key
