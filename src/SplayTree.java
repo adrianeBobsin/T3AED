@@ -6,11 +6,12 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
     // === Classe Node ===
     private class Node {
         private Key key;            // Chave do nodo
-        private int value;          // Valor
+        private Integer value;      // Valor
         private Node left, right;   // Referências de esquerda e direita do nodo
+        private Node father;        // Referência para o pai do nodo
 
         // == Constructor Node ==
-        public Node(Key key, int value) {
+        public Node(Key key, Integer value) {
             this.key = key;
             this.value = value;
         }
@@ -106,6 +107,8 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
             n.right = root;
             root.left = null;
             root = n;
+            root.left.father = root;
+            root.right.father = root;
         }
 
         // Insert new node at root
@@ -115,6 +118,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
             n.left = root;
             root.right = null;
             root = n;
+            root.left.father = root;
         }
 
         // It was a duplicate key. Simply replace the value
@@ -175,16 +179,36 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         } else return h;
     }
 
+    private Node searchNodeRef(Integer element, Node target) {
+        int r;
+
+        if (element == null || target == null) {
+            return null;
+        }
+
+        r = target.value.compareTo(element);
+
+        if (r == 0) {
+            return target;
+        } else if (r > 0) {
+            return searchNodeRef(element, target.left);
+        } else {
+            return searchNodeRef(element, target.right);
+        }
+    }
+
+
     /**
      * Método que retorna o pai do elemento.
      * Notação O()
      *
-     * @param key
-     * @return nodo pai do elemento
+     * @param n
+     * @return pai do elemento
      */
-   // private Node getParent(Key key) {
-        // Implementar
-   // }
+    public int getParent(Integer n) {
+        Node aux = searchNodeRef(n, root);
+        return aux.father.value;
+    }
 
     /**
      * Método que verifica se a árvore é balanceada
@@ -193,8 +217,8 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
      * @return true se a árvore for balanceada ou
      * false se não for.
      */
-   // private boolean isBalanced() {
-        //Implementar
+  //  private boolean isBalanced() {
+       // Implementar
    // }
 
 
@@ -289,6 +313,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         Node x = h.left;
         h.left = x.right;
         x.right = h;
+        x.father = h;
         return x;
     }
 
@@ -297,6 +322,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         Node x = h.right;
         h.right = x.left;
         x.left = h;
+        x.father = h;
         return x;
     }
 }

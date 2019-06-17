@@ -19,15 +19,26 @@ public class App {
         // Verificar se a árvore está balanceada:
             // Implementar
 
+        System.out.println("Pai do elemento 20: "+st1.getParent(20));
+
         //Verificar a altura da árvore:
         System.out.println("Altura da árvore: "+ st1.height());
 
-        //Lista de elementos da árvore
-        //Caminhamento pré-fixado
+
+        /***************************************************************************
+         *      Caminhamentos                                                      *
+         ***************************************************************************/
+
+        // == Pré-fixado ==
         System.out.println("Caminhamento pré-fixado: "+ st1.positionsPre());
 
-        //Exibir árvore com métodos de caminhamento:
-            //Implementar
+        // == Pós-fixado ==
+        System.out.println("Caminhamento pós-fixado: "+st1.positionsPos());
 
+        // == Central ==
+        System.out.println("Caminhamento central: "+st1.positionsCentral());
+
+        // == Largura ==
+            // **Implementar
     }
 }
