@@ -284,7 +284,48 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         }
     }
 
+    /**
+     * Retorna uma lista com todos os elementos da árvore na ordem de
+     * caminhamento em largura.
+     *
+     * Notação O()
+     *
+     * @return LinkedListOfInteger lista com os elementos da arvore
+     */
+    public LinkedListOfInteger positionsWidth() {
+        Queue<Node> fila = new Queue<>();
+        LinkedListOfInteger res = new LinkedListOfInteger();
+        fila.enqueue(root);
+        positionsWidthAux(root, res, fila);
+        return res;
+    }
 
+    private void positionsWidthAux(Node n, LinkedListOfInteger res, Queue<Node> fila) {
+        if (n != null) {
+            if (!fila.isEmpty()) {
+                // Incluir os nodos filhos na fila
+                if (n.right != null) {
+                    fila.enqueue(n.right);
+                }
+
+                if (n.left != null) {
+                    fila.enqueue(n.left);
+                }
+
+                //Pega o nodo que esta sendo visitado e inclui na lista
+                res.add(n.value);
+
+                //exclui esse elemento visitado da fila
+                fila.dequeue();
+
+                //Chama o próprio método aux passando o
+                if (!fila.isEmpty()) {
+                    positionsWidthAux(fila.head(), res, fila);
+                }
+
+            }
+        }
+    }
 
     /***************************************************************************
      *      Métodos auxiliares                                                 *
