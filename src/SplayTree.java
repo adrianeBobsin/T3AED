@@ -319,6 +319,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
                 fila.dequeue();
 
                 //Chama o próprio método aux passando o
+                //primeiro elemento da fila.
                 if (!fila.isEmpty()) {
                     positionsWidthAux(fila.head(), res, fila);
                 }
