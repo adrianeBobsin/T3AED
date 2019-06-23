@@ -1,3 +1,9 @@
+/**
+ * Splay Tree
+ *
+ * @author Adriane, Matheus e Pércio
+ */
+
 public class SplayTree<Key extends Comparable<Key>, Value> {
 
     //Raiz da árvore
@@ -20,7 +26,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
     /**
      * Verifica se a chave passada por parâmetro
      *  existe na árvore.
-     *  Notação O()
+     *  Notação O(n)
      *
      * @param key
      * @return true se a chave existe ou false se não existir na árvore
@@ -42,7 +48,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Pega um valor através da chave passada por parâmetro.
-     * Notação O()
+     * Notação O(n)
      *
      * @param key
      * @return o valor do nodo que possui a chave indicada ou null se a
@@ -90,7 +96,8 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
      * @param value
      */
     public void put(Key key, int value) {
-        // splay key to root
+        // Se a árvore estiver vazia,
+        // inclui o elemento na raiz
         if (root == null) {
             root = new Node(key, value);
             return;
@@ -100,7 +107,10 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
         int cmp = key.compareTo(root.key);
 
-        // Insert new node at root
+        // Insere o novo nodo sempre na raiz
+        // mas antes verifica se a raiz atual da árvore
+        // é maior ou menor que o novo nodo que está sendo inserido
+        // para decidir de qual a antiga raiz será alocada como filha do novo nodo.
         if (cmp < 0) {
             Node n = new Node(key, value);
             n.left = root.left;
@@ -110,8 +120,6 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
             root.left.father = root;
             root.right.father = root;
         }
-
-        // Insert new node at root
         else if (cmp > 0) {
             Node n = new Node(key, value);
             n.right = root.right;
@@ -121,7 +129,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
             root.left.father = root;
         }
 
-        // It was a duplicate key. Simply replace the value
+        // Se for um valor duplicado, apenas substitui o valor da raiz
         else {
             root.value = value;
         }
@@ -143,10 +151,12 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         int cmp1 = key.compareTo(h.key);
 
         if (cmp1 < 0) {
-            // key not in tree, so we're done
+            //Se o valor não existe na árvore retorna ele mesmo
             if (h.left == null) {
                 return h;
             }
+
+            // Se o valor existe na árvore
             int cmp2 = key.compareTo(h.left.key);
             if (cmp2 < 0) {
                 h.left.left = splay(h.left.left, key);
@@ -160,7 +170,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
             if (h.left == null) return h;
             else return rotateRight(h);
         } else if (cmp1 > 0) {
-            // key not in tree, so we're done
+            //Se o valor não existe na árvore retorna ele mesmo
             if (h.right == null) {
                 return h;
             }
@@ -180,6 +190,14 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         } else return h;
     }
 
+    /**
+     * Método que retorna a referencia do nodo que possui o valor
+     * passado como parâmetro.
+     * Notação O(log n)
+     *
+     * @param element e target
+     * @return referencia do nodo
+     */
     private Node searchNodeRef(Integer element, Node target) {
         int r;
 
@@ -201,26 +219,105 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Método que retorna o pai do elemento.
-     * Notação O()
+     * Notação O(n)
      *
      * @param n
      * @return pai do elemento
      */
     public int getParent(Integer n) {
         Node aux = searchNodeRef(n, root);
-        return aux.father.value;
+        int parent = aux.father.value;
+        root = splay(root, aux.father.key);
+        return parent;
     }
 
     /**
      * Método que verifica se a árvore é balanceada
-     * Notação O()
+     * Notação O(n)
      *
      * @return true se a árvore for balanceada ou
      * false se não for.
      */
-  //  private boolean isBalanced() {
-       // Implementar
-   // }
+    public boolean isBalanced() {
+
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(Node root) {
+        if (root == null) {
+            return true;
+        }
+
+        return (Math.abs(height(root.left) - height(root.right)) < 2)
+                && isBalanced(root.left) && isBalanced(root.right);
+    }
+
+    /**
+     * Método que retorna a altura da árvore.
+     *
+     * Notação O(n)
+     *
+     * @return height
+     */
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node x) {
+        if (x == null) return -1;
+        return 1 + Math.max(height(x.left), height(x.right));
+    }
+
+    /**
+     * Método que retorna o tamanho da árvore.
+     * Notação O(n)
+     *
+     * @return
+     */
+    public int size() {
+        return size(root);
+    }
+
+    private int size(Node x) {
+        if (x == null) return 0;
+        else return 1 + size(x.left) + size(x.right);
+    }
+
+
+    /**
+     * Método que realiza a rotação dos nodos à direita.
+     * É utilizado pelo metodo Splay.
+     *
+     * Notação O(n)
+     *
+     * @param h
+     * @return o nodo alterado de posição
+     */
+    private Node rotateRight(Node h) {
+        Node x = h.left;
+        h.left = x.right;
+        x.right = h;
+        x.father = h;
+        return x;
+    }
+
+
+    /**
+     * Método que realiza a rotação dos nodos à esquerda.
+     * É utilizado pelo metodo Splay.
+     *
+     * Notação O(n)
+     *
+     * @param h
+     * @return o nodo alterado de posição
+     */
+    private Node rotateLeft(Node h) {
+        Node x = h.right;
+        h.right = x.left;
+        x.left = h;
+        x.father = h;
+        return x;
+    }
 
 
     /***************************************************************************
@@ -229,7 +326,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Caminhamento pré-fixado
-     * Notação O()
+     * Notação O(n)
      *
      * @return uma lista de inteiros contendo os elementos da árvore.
      */
@@ -248,7 +345,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Caminhamento pós-fixado
-     * Notação O()
+     * Notação O(n)
      *
      * @return uma lista de inteiros contendo os elementos da árvore.
      */
@@ -267,7 +364,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Caminhamento central.
-     * Notação O()
+     * Notação O(n)
      *
      * @return lista de inteiros contendo os elementos da árvore.
      */
@@ -288,7 +385,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
      * Retorna uma lista com todos os elementos da árvore na ordem de
      * caminhamento em largura.
      *
-     * Notação O()
+     * Notação O(n)
      *
      * @return LinkedListOfInteger lista com os elementos da arvore
      */
@@ -328,44 +425,4 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         }
     }
 
-    /***************************************************************************
-     *      Métodos auxiliares                                                 *
-     ***************************************************************************/
-
-    // height of tree (1-node tree has height 0)
-    public int height() {
-        return height(root);
-    }
-
-    private int height(Node x) {
-        if (x == null) return -1;
-        return 1 + Math.max(height(x.left), height(x.right));
-    }
-
-    public int size() {
-        return size(root);
-    }
-
-    private int size(Node x) {
-        if (x == null) return 0;
-        else return 1 + size(x.left) + size(x.right);
-    }
-
-    // right rotate
-    private Node rotateRight(Node h) {
-        Node x = h.left;
-        h.left = x.right;
-        x.right = h;
-        x.father = h;
-        return x;
-    }
-
-    // left rotate
-    private Node rotateLeft(Node h) {
-        Node x = h.right;
-        h.right = x.left;
-        x.left = h;
-        x.father = h;
-        return x;
-    }
 }
