@@ -17,7 +17,7 @@ public class App {
         st1.put(10, 25);
 
         // Verificar se a árvore está balanceada:
-            // Implementar
+        System.out.println("Árvore está balanceada? "+st1.isBalanced());
 
 
         //Verificar a altura da árvore:

@@ -133,9 +133,7 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
         else {
             root.value = value;
         }
-
     }
-
 
     /**
      * Método de espelhamento da árvore.
@@ -239,7 +237,6 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
      * false se não for.
      */
     public boolean isBalanced() {
-
         return isBalanced(root);
     }
 
@@ -254,7 +251,6 @@ public class SplayTree<Key extends Comparable<Key>, Value> {
 
     /**
      * Método que retorna a altura da árvore.
-     *
      * Notação O(n)
      *
      * @return height
